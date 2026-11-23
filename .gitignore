@@ -5,7 +5,7 @@ __pycache__/
 *.pt
 !starter/classifier/checkpoints/receipt_cnn_clean.pt
 faiss_index/
-poisoned_data/
+poisoned_data*/
 .DS_Store
 _cifar_cache/
 _dataset_cache/
