@@ -29,8 +29,8 @@ We tested the three AI components of the expense platform — the receipt-scanni
 ### 4. Receipt Fraud via Image Manipulation (Classifier) — HIGH
 **Business Impact:** We showed that an ordinary image (a photo of a car) can be altered — with changes a reviewer would not notice — so the system accepts it as a valid receipt. The reverse also works, blocking genuine receipts. This directly undermines the control's purpose and enables expense fraud if approvals are automated.
 
-### 5. Training-Data Tampering (Classifier Pipeline) — MEDIUM
-**Business Impact:** An insider able to alter the data used to train the model can quietly degrade its reliability — making it less certain and more likely to wave through invalid receipts — without triggering the accuracy checks currently in place. The damage is gradual and hard to detect after the fact.
+### 5. Training-Data Tampering (Classifier Pipeline) — HIGH
+**Business Impact:** An insider able to alter the data used to train the model can cripple it. By corrupting a small, carefully chosen slice of training examples (under 10%), we cut the model's accuracy roughly in half and made it fail to recognize most genuine receipts. The images are never touched — only their labels — so the tampering is invisible to a normal data review, and because small random corruption is harmless here, routine accuracy checks can miss it.
 
 ## Prioritized Remediation
 

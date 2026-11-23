@@ -77,10 +77,14 @@ Below 50% accuracy by ε≈0.03–0.05; at ε=0.05 a car photo is classified `re
 
 ```bash
 cd attacks
-# 1. Create poisoned dataset (5% of training labels flipped; test set untouched)
-python 02_label_flip_poisoning.py
+# 1. Create the targeted poisoned dataset — flip the 115 most prototypical
+#    receipts (<10% of labels) listed in the manifest; test set untouched.
+python 02_label_flip_poisoning.py --manifest prototypical_manifest.txt \
+  --target ../classifier/poisoned_data
 
-# 2. Retrain on poisoned data (Ctrl-C after "Saved checkpoint" on macOS)
+# 2. Retrain on the poisoned data with the provided train.py.
+#    (On macOS, Ctrl-C once "Saved checkpoint" prints — the worker shutdown
+#    hangs; the checkpoint is already written. Training uses seed 42.)
 cd ../classifier
 python train.py --data-dir poisoned_data --checkpoint-name receipt_cnn_poisoned.pt
 
@@ -90,7 +94,7 @@ python evaluate.py --model-path checkpoints/receipt_cnn_clean.pt   --test-dir ba
 cd ..
 ```
 
-Expected: `Labels flipped: 56 (4.85%)`; `diff -rq balanced_data/test poisoned_data/test` shows no differences. Accuracy stays near baseline, but mean confidence drops (0.856→0.786 at 5%, 0.630 at 10%) and false positives rise. For the 10% comparison used in the write-up, add `--flip-rate 0.10 --target ../classifier/poisoned_data_10`. **Accuracy alone does not reveal this attack** — see `poisoning_results_delivered.md`.
+Expected: `Flipped 115 receipt -> non_receipt` (9.97%); `diff -rq balanced_data/test poisoned_data/test` shows no differences. Poisoned accuracy **0.5923** vs clean **0.9436** (−35 pts), recall 0.89 → 0.18. For the contrast that *random* flips are harmless, run `python 02_label_flip_poisoning.py --flip-rate 0.10` (symmetric) — accuracy stays ~0.94. Train on CPU for a deterministic result (the targeted collapse is a tipping-point effect; see `poisoning_results_delivered.md`).
 
 ## Step 5: RAG Chatbot Setup
 
@@ -146,7 +150,7 @@ Only 3 HIGH CVEs are fixable (all Python). Report → `attacks/results/05_supply
 |--------|--------|----------------|
 | Clean baseline | Accuracy | 0.9436 (P 0.9943 / R 0.8923 / F1 0.9405) |
 | FGSM evasion | Adversarial accuracy | 0.94 → 0.30 by ε=0.05 (68% attack success); car→receipt at ε=0.05 |
-| Label-flip poisoning | Accuracy / confidence | Accuracy ≈ baseline; mean confidence 0.86→0.63 and uncertain preds 60→137 at 10% |
+| Label-flip poisoning (targeted) | Accuracy / recall | 0.9436 → 0.5923 (−35 pts); recall 0.89 → 0.18. Random flips of the same size: ~0.94 (harmless) |
 | Prompt injection | Answer-level successes | 2/5 (plus 3/5 confidential-source retrieval leaks) |
 | Data exfiltration | Confidential retrieval | 6/6 queries retrieve the CONFIDENTIAL doc; 5/6 leak figures |
 | Supply chain | Vuln + Dockerfile counts | 804 vulns (34 HIGH); 6 Dockerfile issues; 3 HIGH fixable |

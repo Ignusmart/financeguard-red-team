@@ -12,3 +12,9 @@ _dataset_cache/
 *.json
 !starter/06_trivy_report.json
 !starter/attacks/results/**/*.json
+poison_*/
+proto_*/
+starter/attacks/results/02_label_flip/proto_*/
+starter/attacks/results/02_label_flip/targeted_*/
+starter/attacks/results/02_label_flip/prototypical/
+starter/attacks/results/02_label_flip/flip10/
