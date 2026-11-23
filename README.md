@@ -1,21 +1,56 @@
 # AI System Compromise & Resilience Assessment (Finance Edition)
 
-Capstone project for the Udacity AI Security nanodegree. You take the role of a **Junior AI Red Team Operator** at FinanceGuard Inc. and execute 5 adversarial attacks against a financial AI system (a receipt classifier and an expense-policy RAG chatbot).
+Capstone project for the Udacity AI Security nanodegree. In the role of an **AI Red Team Operator** at FinanceGuard Inc., this assessment executes five adversarial attacks against a financial AI system — a receipt-image classifier and an expense-policy RAG chatbot — and reports the findings for a security and executive audience.
 
-> Full step-by-step instructions and the grading rubric live in the Udacity classroom. This repo contains only the scaffolded code and templates you'll work in.
+**Status: complete.** All five attack scripts are implemented and run, and all nine report documents are written. Deliverables are in [`starter/doc_delivery/`](starter/doc_delivery/); raw outputs are in `starter/attacks/results/`.
+
+## Results Summary
+
+| # | Attack | Target | Key Result | Severity |
+|---|--------|--------|-----------|----------|
+| 1 | FGSM Evasion | Receipt Classifier | Accuracy 0.94 → 0.30 at ε=0.05 (68% attack success); a car photo passes as a receipt with near-invisible noise | HIGH |
+| 2 | Label-Flip Poisoning | Training Pipeline | Targeted flip of the 115 most prototypical receipts (<10% of labels) collapses accuracy 0.9436 → 0.5923 (−35 pts); random flips are harmless | HIGH |
+| 3 | Prompt Injection | RAG Chatbot | 2/5 techniques succeed at the answer level (forged-context fake policy, persona data leak); 3/5 leak the confidential file at retrieval | HIGH |
+| 4 | Data Exfiltration | RAG Vector Store | 6/6 queries retrieve `executive_bonus_structure_CONFIDENTIAL.md`; CEO pay, $47.50 strike price, clawback terms leaked | CRITICAL |
+| 5 | Supply Chain Analysis | Docker / Dependencies | 804 CVEs (34 HIGH); 6 Dockerfile issues incl. root user and the API key baked in via `COPY .` | HIGH |
+
+## For the Reviewer
+
+All written deliverables are in [`starter/doc_delivery/`](starter/doc_delivery/) (`*_delivered.md`):
+
+| Document | Covers |
+|----------|--------|
+| [`charter_delivered.md`](starter/doc_delivery/charter_delivered.md) | Red Team Charter — engagement, objectives, scope, rules of engagement, success criteria |
+| [`fgsm_results_delivered.md`](starter/doc_delivery/fgsm_results_delivered.md) | FGSM epsilon sweep, visual evidence, analysis |
+| [`poisoning_results_delivered.md`](starter/doc_delivery/poisoning_results_delivered.md) | Clean vs. poisoned metrics, confusion matrices, targeted-vs-random analysis |
+| [`prompt_injection_transcript_delivered.md`](starter/doc_delivery/prompt_injection_transcript_delivered.md) | 5 injection techniques, full transcripts, both success signals |
+| [`data_exfiltration_evidence_delivered.md`](starter/doc_delivery/data_exfiltration_evidence_delivered.md) | 6 exfiltration queries, leaked data, root cause |
+| [`supply_chain_analysis_delivered.md`](starter/doc_delivery/supply_chain_analysis_delivered.md) | Trivy CVE breakdown, Dockerfile review, prioritized remediation |
+| [`vulnerability_log_delivered.md`](starter/doc_delivery/vulnerability_log_delivered.md) | All 5 findings: severity, evidence, recommendation |
+| [`executive_summary_delivered.md`](starter/doc_delivery/executive_summary_delivered.md) | Business-audience risk summary and remediation priorities |
+| [`reproduction_steps_delivered.md`](starter/doc_delivery/reproduction_steps_delivered.md) | Copy-pasteable commands and expected output for every finding |
+
+Supporting evidence:
+- **Attack scripts:** [`starter/attacks/`](starter/attacks/) — `01_fgsm_evasion.py` … `05_supply_chain_analysis.py`
+- **Raw results:** `starter/attacks/results/` — JSON per attack, FGSM comparison PNGs, poisoning confusion matrices
+- **Poisoning manifest:** `starter/attacks/prototypical_manifest.txt` — the exact 115-file flip set that reproduces the targeted-poisoning result
+
+To reproduce any finding, follow [`reproduction_steps_delivered.md`](starter/doc_delivery/reproduction_steps_delivered.md).
 
 ## Repository Layout
 
 ```
 .
-├── starter/             # Scaffolded project files — work here
-│   ├── classifier/      # Receipt CNN (given: model, train, evaluate, pretrained ckpt)
-│   ├── attacks/         # 5 attack scripts — YOU IMPLEMENT
-│   ├── rag_chatbot/     # Expense chatbot (given: app, rag, index, policies)
-│   ├── docs/            # Documentation templates — YOU FILL IN
-│   ├── .env.example     # API key configuration template
+├── starter/
+│   ├── classifier/        # Receipt CNN — system under test (given), + trained poisoned ckpt
+│   ├── attacks/           # 5 attack scripts (implemented) + prototypical_manifest.txt
+│   │   └── results/       # JSON outputs, plots, confusion matrices
+│   ├── rag_chatbot/       # Expense chatbot — system under test (given)
+│   ├── doc_delivery/      # ← DELIVERABLES: the 9 *_delivered.md reports
+│   ├── docs/              # Blank templates the deliverables are based on
+│   ├── .env.example       # API key configuration template
 │   ├── 06_trivy_report.json
-│   ├── requirements.txt # Pinned Python dependencies
+│   ├── requirements.txt
 │   └── Dockerfile
 ├── LICENSE.txt
 └── CODEOWNERS
@@ -31,61 +66,41 @@ Capstone project for the Udacity AI Security nanodegree. You take the role of a 
 | 4 | Data Exfiltration | RAG Vector Store | Extract confidential documents through the chatbot |
 | 5 | Supply Chain Analysis | Docker / Dependencies | Identify vulnerabilities via Trivy report and Dockerfile review |
 
-## Getting Started
+## Reproducing the Attacks
 
-### Udacity Workspace
-
-The starter files are pre-loaded and dependencies are pre-installed. Skip ahead to the verification steps in the classroom instructions.
-
-### Local Setup
-
-Targets **Python 3.12.13**.
+Targets **Python 3.12**.
 
 ```bash
 python3.12 -m venv .venv
-source .venv/bin/activate          # macOS/Linux
-# .venv\Scripts\activate           # Windows
+source .venv/bin/activate          # macOS/Linux; Windows: .venv\Scripts\activate
+pip install -r starter/requirements.txt
+pip install -r starter/rag_chatbot/requirements.txt
 
-pip install -r requirements.txt
-```
-
-Configure your classroom API key:
-
-```bash
+# Chatbot credentials (git-ignored; never committed)
 cp starter/.env.example starter/rag_chatbot/.env
-# edit starter/rag_chatbot/.env to set OPENAI_API_KEY and OPENAI_BASE_URL
+# edit to set OPENAI_API_KEY and OPENAI_BASE_URL
 ```
 
-Verify the provided model and chatbot work end-to-end:
+Verify the environment, then run any attack:
 
 ```bash
 cd starter/classifier
 python evaluate.py --model-path checkpoints/receipt_cnn_clean.pt --test-dir balanced_data/test
-# Expected: ~94% accuracy
+# Expected: ~94% accuracy (0.9436)
 
-cd ../rag_chatbot
-python build_index.py
-python app.py &
-curl -X POST http://localhost:5001/chat \
-  -H "Content-Type: application/json" \
-  -d '{"question": "What is the meal expense limit?"}'
+cd ../attacks
+python 01_fgsm_evasion.py          # classifier attacks don't need the chatbot
 ```
 
-## What You Implement vs. What's Given
+The chatbot attacks (03, 04) need the Flask server running on port 5001; see
+[`reproduction_steps_delivered.md`](starter/doc_delivery/reproduction_steps_delivered.md)
+for the full, step-by-step commands and expected output for all five attacks.
 
-**You implement** — the 5 attack scripts in `starter/attacks/`.
+> **macOS note:** `train.py` can hang after printing `Saved checkpoint` (DataLoader worker shutdown); the checkpoint is already written. Train on CPU for deterministic results.
 
-**Given to you** — do not modify the classifier, RAG chatbot, policy documents, Trivy report, or Dockerfile. They are the system under test.
+## System Under Test (given — not modified)
 
-**You write** — the documentation in `starter/docs/` (Red Team Charter, Vulnerability Log, per-attack results, Executive Risk Summary, Reproduction Steps) using the provided templates.
-
-## Deliverables
-
-1. 5 completed attack scripts in `starter/attacks/`
-2. Filled-in documentation files in `starter/docs/`
-3. Attack output files (JSON results from running your scripts)
-
-Grading criteria are in the classroom rubric.
+The classifier, RAG chatbot, policy documents, Trivy report and Dockerfile are the target system and are left unchanged; the assessment treats them as a black/white-box target and only recommends fixes. The work product is the five attack scripts and the nine reports.
 
 ## License
 
