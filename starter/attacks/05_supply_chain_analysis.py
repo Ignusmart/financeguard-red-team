@@ -166,14 +166,14 @@ def analyze_dockerfile(path):
 
 
 def generate_report(vulns, dockerfile_issues):
-    """Generate a structured supply chain risk report."""
-    # TODO: Generate a report dictionary with:
-    # - "summary": total vulnerabilities, severity breakdown, dockerfile issue count
-    # - "high_severity_vulnerabilities": list of HIGH severity CVEs (top 15)
-    # - "python_specific": vulnerabilities in Python packages
-    # - "dockerfile_issues": from analyze_dockerfile()
-    # - "risk_assessment": overall risk level and key concerns
-
+    """
+    Generate a structured supply chain risk report with:
+      - summary: total vulnerabilities, severity breakdown, dockerfile issue count
+      - high_severity_vulnerabilities: top 15 HIGH/CRITICAL CVEs (fixable first)
+      - python_specific: vulnerabilities in Python packages
+      - dockerfile_issues: from analyze_dockerfile()
+      - risk_assessment: overall risk level and key concerns
+    """
     severity_counts = {}
     for v in vulns:
         sev = v.get("severity", "UNKNOWN")
