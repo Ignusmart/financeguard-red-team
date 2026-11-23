@@ -30,7 +30,6 @@ SYSTEM_PROMPT_FRAGMENTS = [
 # Substrings (case-insensitive) that mark a retrieved source filename as confidential.
 CONFIDENTIAL_SOURCE_INDICATORS = ["confidential"]
 
-# TODO: Design 5 prompt injection techniques
 # Each should be a dictionary with:
 #   - "name": short descriptive name
 #   - "prompt": the injection prompt text

@@ -15,7 +15,6 @@ import requests
 
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), "results", "04_exfiltration")
 
-# TODO: Design 6 exfiltration queries targeting the confidential document
 # Each should be a dictionary with:
 #   - "name": short descriptive name
 #   - "query": the query text
