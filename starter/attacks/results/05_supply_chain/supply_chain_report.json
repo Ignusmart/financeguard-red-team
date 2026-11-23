@@ -1,0 +1,263 @@
+{
+  "summary": {
+    "total_vulnerabilities": 804,
+    "severity_breakdown": {
+      "LOW": 601,
+      "MEDIUM": 160,
+      "HIGH": 34,
+      "UNKNOWN": 9
+    },
+    "dockerfile_issues": 6
+  },
+  "high_severity_vulnerabilities": [
+    {
+      "id": "CVE-2026-23949",
+      "severity": "HIGH",
+      "package": "jaraco.context",
+      "installed_version": "5.3.0",
+      "fixed_version": "6.1.0",
+      "title": "jaraco.context: jaraco.context: Path traversal via malicious tar archives",
+      "description": "jaraco.context, an open-source software package that provides some useful decorators and context managers, has a Zip Slip path traversal vulnerability in the `jaraco.context.tarball()` function starti",
+      "target": "Python",
+      "target_type": "python-pkg"
+    },
+    {
+      "id": "CVE-2026-24049",
+      "severity": "HIGH",
+      "package": "wheel",
+      "installed_version": "0.45.1",
+      "fixed_version": "0.46.2",
+      "title": "wheel: wheel: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking",
+      "description": "wheel is a command line tool for manipulating Python wheel files, as defined in PEP 427. In versions 0.40.0 through 0.46.1, the unpack function is vulnerable to file permission modification through mi",
+      "target": "Python",
+      "target_type": "python-pkg"
+    },
+    {
+      "id": "CVE-2026-24049",
+      "severity": "HIGH",
+      "package": "wheel",
+      "installed_version": "0.45.1",
+      "fixed_version": "0.46.2",
+      "title": "wheel: wheel: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking",
+      "description": "wheel is a command line tool for manipulating Python wheel files, as defined in PEP 427. In versions 0.40.0 through 0.46.1, the unpack function is vulnerable to file permission modification through mi",
+      "target": "Python",
+      "target_type": "python-pkg"
+    },
+    {
+      "id": "CVE-2026-25210",
+      "severity": "HIGH",
+      "package": "libexpat1",
+      "installed_version": "2.7.1-2",
+      "fixed_version": "",
+      "title": "libexpat: libexpat: Information disclosure and data integrity issues due to integer overflow in buffer reallocation",
+      "description": "In libexpat before 2.7.4, the doContent function does not properly determine the buffer size bufSize because there is no integer overflow check for tag buffer reallocation.",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2013-7445",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: memory exhaustion via crafted Graphics Execution Manager (GEM) objects",
+      "description": "The Direct Rendering Manager (DRM) subsystem in the Linux kernel through 4.x mishandles requests for Graphics Execution Manager (GEM) objects, which allows context-dependent attackers to cause a denia",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2019-19449",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: mounting a crafted f2fs filesystem image can lead to slab-out-of-bounds read access in f2fs_build_segment_manager in fs/f2fs/segment.c",
+      "description": "In the Linux kernel 5.0.21, mounting a crafted f2fs filesystem image can lead to slab-out-of-bounds read access in f2fs_build_segment_manager in fs/f2fs/segment.c, related to init_min_max_mtime in fs/",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2019-19814",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: out-of-bounds write in __remove_dirty_segment in fs/f2fs/segment.c",
+      "description": "In the Linux kernel 5.0.21, mounting a crafted f2fs filesystem image can cause __remove_dirty_segment slab-out-of-bounds write access because an array is bounded by the number of dirty types (8) but t",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2021-3847",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: low-privileged user privileges escalation",
+      "description": "An unauthorized access to the execution of the setuid file with capabilities flaw in the Linux kernel OverlayFS subsystem was found in the way user copying a capable file from a nosuid mount into anot",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2021-3864",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: descendant's dumpable setting with certain SUID binaries",
+      "description": "A flaw was found in the way the dumpable flag setting was handled when certain SUID binaries executed its descendants. The prerequisite is a SUID binary that sets real UID equal to effective UID, and ",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2024-21803",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: bluetooth: use-after-free vulnerability in af_bluetooth.c",
+      "description": "Use After Free vulnerability in Linux Linux kernel kernel on Linux, x86, ARM (bluetooth modules) allows Local Execution of Code. This vulnerability is associated with program files https://gitee.Com/a",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2024-58015",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: wifi: ath12k: Fix for out-of bound access error",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: ath12k: Fix for out-of bound access error\n\nSelfgen stats are placed in a buffer using print_array_to_buf_index() function.\nAr",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2024-58093",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: Linux kernel: PCI/ASPM use-after-free during hot-unplug",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nPCI/ASPM: Fix link state exit during switch upstream function removal\n\nBefore 456d8aa37d0f (\"PCI/ASPM: Disable ASPM on MFD function",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2025-22104",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: ibmvnic: Use kernel helpers for hex dumps",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nibmvnic: Use kernel helpers for hex dumps\n\nPreviously, when the driver was printing hex dumps, the buffer was cast\nto an 8 byte lon",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2025-38137",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: PCI/pwrctrl: Cancel outstanding rescan work when unregistering",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nPCI/pwrctrl: Cancel outstanding rescan work when unregistering\n\nIt's possible to trigger use-after-free here by:\n\n  (a) forcing res",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    },
+    {
+      "id": "CVE-2025-38187",
+      "severity": "HIGH",
+      "package": "linux-libc-dev",
+      "installed_version": "6.12.74-2",
+      "fixed_version": "",
+      "title": "kernel: drm/nouveau: fix a use-after-free in r535_gsp_rpc_push()",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/nouveau: fix a use-after-free in r535_gsp_rpc_push()\n\nThe RPC container is released after being passed to r535_gsp_rpc_send().\n",
+      "target": "offensive-ai-course (debian 13.4)",
+      "target_type": "debian"
+    }
+  ],
+  "python_specific": [
+    {
+      "id": "CVE-2026-23949",
+      "severity": "HIGH",
+      "package": "jaraco.context",
+      "installed_version": "5.3.0",
+      "fixed_version": "6.1.0",
+      "title": "jaraco.context: jaraco.context: Path traversal via malicious tar archives",
+      "description": "jaraco.context, an open-source software package that provides some useful decorators and context managers, has a Zip Slip path traversal vulnerability in the `jaraco.context.tarball()` function starti",
+      "target": "Python",
+      "target_type": "python-pkg"
+    },
+    {
+      "id": "CVE-2026-24049",
+      "severity": "HIGH",
+      "package": "wheel",
+      "installed_version": "0.45.1",
+      "fixed_version": "0.46.2",
+      "title": "wheel: wheel: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking",
+      "description": "wheel is a command line tool for manipulating Python wheel files, as defined in PEP 427. In versions 0.40.0 through 0.46.1, the unpack function is vulnerable to file permission modification through mi",
+      "target": "Python",
+      "target_type": "python-pkg"
+    },
+    {
+      "id": "CVE-2026-24049",
+      "severity": "HIGH",
+      "package": "wheel",
+      "installed_version": "0.45.1",
+      "fixed_version": "0.46.2",
+      "title": "wheel: wheel: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking",
+      "description": "wheel is a command line tool for manipulating Python wheel files, as defined in PEP 427. In versions 0.40.0 through 0.46.1, the unpack function is vulnerable to file permission modification through mi",
+      "target": "Python",
+      "target_type": "python-pkg"
+    }
+  ],
+  "dockerfile_issues": [
+    {
+      "issue": "Container runs as root (no USER directive)",
+      "severity": "HIGH",
+      "detail": "Without a USER instruction the process runs as root (UID 0). Any RCE via a vulnerable dependency then has root in the container, easing breakout and lateral movement.",
+      "recommendation": "Add a non-root user and `USER appuser` before CMD."
+    },
+    {
+      "issue": "Base image not pinned by digest",
+      "severity": "MEDIUM",
+      "detail": "Base image is tag-pinned only (python:3.11-slim). Tags are mutable, so the same build can pull different, possibly compromised, content later (supply-chain risk).",
+      "recommendation": "Pin by digest, e.g. `FROM python:3.11-slim@sha256:<digest>`."
+    },
+    {
+      "issue": "COPY . copies the entire build context",
+      "severity": "MEDIUM",
+      "detail": "`COPY . /app` bakes everything in the context into the image, including rag_chatbot/.env (the OpenAI API key), the FAISS index and .git history, unless a .dockerignore excludes them.",
+      "recommendation": "Add a .dockerignore (.env, .git, *.pt, faiss_index/) and copy only needed paths."
+    },
+    {
+      "issue": "No HEALTHCHECK instruction",
+      "severity": "LOW",
+      "detail": "Orchestrators cannot tell a hung container from a healthy one, so a crashed or wedged service keeps receiving traffic.",
+      "recommendation": "Add a HEALTHCHECK hitting the app's /health endpoint."
+    },
+    {
+      "issue": "Build tools in final image (build-essential, gcc)",
+      "severity": "MEDIUM",
+      "detail": "Compilers in the runtime image enlarge the attack surface: an attacker who lands code can compile exploits/implants in place. They are only needed to build wheels, not at runtime.",
+      "recommendation": "Use a multi-stage build; install compilers only in the build stage."
+    },
+    {
+      "issue": "Network/VCS tools in final image (curl, git)",
+      "severity": "LOW",
+      "detail": "curl/git give an attacker ready-made tools to pull payloads or exfiltrate data and move laterally after a compromise.",
+      "recommendation": "Remove curl/git from the runtime image, or install only in a build stage."
+    }
+  ],
+  "risk_assessment": {
+    "overall_risk": "HIGH",
+    "high_and_critical_count": 34,
+    "high_and_critical_fixable": 3,
+    "key_concerns": [
+      "34 HIGH/CRITICAL CVEs (3 with a fixed version available)",
+      "3 vulnerability(ies) in Python packages (direct AI dependencies)",
+      "1 HIGH-severity Dockerfile misconfiguration(s), incl. running as root",
+      "COPY . risks baking the OpenAI API key (.env) into image layers"
+    ]
+  }
+}
