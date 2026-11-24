@@ -71,7 +71,7 @@ Expected: accuracy degrades across epsilons and PNGs are written to `attacks/res
    0.050      0.9436    0.3000       0.6821
    0.100      0.9436    0.2718       0.7120
 ```
-Below 50% accuracy by ε≈0.03–0.05; at ε=0.05 a car photo is classified `receipt (0.839)` with only mild visible noise.
+Coin-flip accuracy (0.51) by ε=0.03, below 50% (0.30) by ε=0.05; at ε=0.05 a car photo is classified `receipt (0.839)` with only mild visible noise.
 
 ## Step 4: Data Poisoning
 

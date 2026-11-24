@@ -8,10 +8,10 @@ Capstone project for the Udacity AI Security nanodegree. In the role of an **AI 
 
 | # | Attack | Target | Key Result | Severity |
 |---|--------|--------|-----------|----------|
-| 1 | FGSM Evasion | Receipt Classifier | Accuracy 0.94 → 0.30 at ε=0.05 (68% attack success); a car photo passes as a receipt with near-invisible noise | HIGH |
+| 1 | FGSM Evasion | Receipt Classifier | Accuracy coin-flip (0.51) by ε=0.03, below 50% (0.30) at ε=0.05 (68% attack success); a car photo passes as a receipt with near-invisible noise | HIGH |
 | 2 | Label-Flip Poisoning | Training Pipeline | Targeted flip of the 115 most prototypical receipts (<10% of labels) collapses accuracy 0.9436 → 0.5923 (−35 pts); random flips are harmless | HIGH |
 | 3 | Prompt Injection | RAG Chatbot | 2/5 techniques succeed at the answer level (forged-context fake policy, persona data leak); 3/5 leak the confidential file at retrieval | HIGH |
-| 4 | Data Exfiltration | RAG Vector Store | 6/6 queries retrieve `executive_bonus_structure_CONFIDENTIAL.md`; CEO pay, $47.50 strike price, clawback terms leaked | CRITICAL |
+| 4 | Data Exfiltration | RAG Vector Store | 6/6 queries retrieve `executive_bonus_structure_CONFIDENTIAL.md` (restricted-source leak); 5/6 also disclose figures in the answer — CEO pay, $47.50 strike price, clawback terms | CRITICAL |
 | 5 | Supply Chain Analysis | Docker / Dependencies | 804 CVEs (34 HIGH); 6 Dockerfile issues incl. root user and the API key baked in via `COPY .` | HIGH |
 
 ## For the Reviewer
